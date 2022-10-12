@@ -1,19 +1,26 @@
 from abc import ABCMeta, abstractmethod
+from obaic.requests import PredictionRequest
 
 from obaic.sourcedefinitions import MLSourceDefinition
 
-from .model import ObaicModel, ObaicModelInput, ObaicModelOutput
+from obaic.model import ObaicModel, ObaicScore
 from typing import Iterable
 
 class MLSource(metaclass=ABCMeta):
-    # A single positional parameter is passed to construct the Source
+    # A single positional parameter is passed to construct the MLSource
     def __init__(self, __x: MLSourceDefinition) -> None: pass
 
     @abstractmethod
     def connect(self) -> None: pass
 
     @abstractmethod
-    def list_models(self) -> Iterable[ObaicModel]: pass
+    def close(self) -> None: pass
 
     @abstractmethod
-    def predict(self, model: ObaicModel, input: ObaicModelInput) -> ObaicModelOutput: pass
+    async def list_models(self) -> Iterable[ObaicModel]: pass
+
+    @abstractmethod
+    async def predict(self, model: ObaicModel, prediction_request: PredictionRequest) -> PredictionResponse: pass
+
+    @abstractmethod
+    async def train(self): pass

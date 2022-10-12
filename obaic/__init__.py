@@ -1,6 +1,6 @@
 from .source import ObaicSource
 from .model import ObaicModel
-from .modelquery import ObaicModelQuery
+from .requests import ObaicModelQuery
 
 __ALL__ = [ObaicSource, ObaicModel, ObaicModelQuery]
 
