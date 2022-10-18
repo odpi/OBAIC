@@ -5,7 +5,7 @@ class ObaicModelFormat:
     name: str
     version: str
 
-class ObaicInputField:
+class ObaicModelField:
     # source: http://dmg.org/pmml/v4-4/DataDictionary.html
     # name of the field
     name: str
@@ -25,26 +25,11 @@ class ObaicInputField:
     # extra information like shape of data, distribution, min/max, etc.
     description: str
 
-class ObaicOutputField:
-    name: str
-    op_type: str
-    data_type: str
-    taxonomy: str
-    example: str
-    allow_missing: bool
-    description: str
+class ObaicModelFeature(ObaicModelField): pass
 
-class ObaicModelInput:
-    fields: list[ObaicInputField]
-    ref: str
+class ObaicModelOutput(ObaicModelField): pass
 
-class ObaicModelOutput:
-    fields: list[ObaicOutputField]
-    # reference to external schema to understand the format used here
-    ref: str
-
-
-class ObaicModelPerformance:
+class ObaicModelMetric:
     # based on model used, metric can be 
     # accuracy, precision, recall, ROC,
     # AUC, Gini coefficient, Log loss, F1 score, MAE, MSE, etc.
@@ -78,9 +63,9 @@ class ObaicModel:
     dependency: str
     creator: str
     description: str
-    input: ObaicModelInput
-    output: ObaicModelOutput
-    performance: ObaicModelPerformance
+    example: list[ObaicModelFeature]
+    prediction: list[ObaicModelOutput]
+    performance: list[ObaicModelMetric]
     rating: int
     # link to the real model for download
     url: str

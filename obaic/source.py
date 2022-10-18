@@ -3,7 +3,7 @@ from obaic.requests import PredictionRequest
 
 from obaic.sourcedefinitions import MLSourceDefinition
 
-from obaic.model import ObaicModel, ModelRequest
+from obaic.model import ObaicModel, ModelRequest, ObaicOutput
 from typing import Iterable
 
 class MLSource(metaclass=ABCMeta):
@@ -17,10 +17,10 @@ class MLSource(metaclass=ABCMeta):
     async def list_models_async(self, model_request: ModelRequest) -> Iterable[ObaicModel]: pass
 
     @abstractmethod
-    def predict(self, model: ObaicModel, prediction_request: PredictionRequest) -> PredictionResponse: pass
+    def predict(self, model: ObaicModel, prediction_request: PredictionRequest) -> Iterable[ObaicOutput]: pass
 
     @abstractmethod
-    async def predict_async(self, model: ObaicModel, prediction_request: PredictionRequest) -> PredictionResponse: pass
+    async def predict_async(self, model: ObaicModel, prediction_request: PredictionRequest) -> Iterable[ObaicOutput]: pass
 
     @abstractmethod
     async def train(self): pass
