@@ -1,5 +1,7 @@
 class ObaicModelFormat:
-    # PMML, ONNX, or other formats recognized by OBAIC
+    """
+    PMML, ONNX, or other formats recognized by OBAIC
+    """
     name: str
     version: str
 
