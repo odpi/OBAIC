@@ -1,29 +1,33 @@
 from abc import ABCMeta, abstractmethod
-from obaic.requests import PredictionRequest
 
-from obaic.sourcedefinitions import MLSourceDefinition
+from obaic.model import ObaicModel, ObaicOutput
+from typing import Any, Dict, Iterable, List, Sequence
 
-from obaic.model import ObaicModel, ModelRequest, ObaicOutput
-from typing import Iterable
+ObaicValue = Any
+ObaicFeature = Sequence[Any]
+ObaicOutput = Sequence[Any]
 
 class MLSource(metaclass=ABCMeta):
-    # A single positional parameter is passed to construct the MLSource
-    def __init__(self, __x: MLSourceDefinition) -> None: pass
+
+    def __init__(self, ml_src_parameters: Dict[str, str], ml_src_credentials: Dict[str, str]) -> None: pass
 
     @abstractmethod
-    def list_models(self, model_request: ModelRequest) -> Iterable[ObaicModel]: pass
+    def list_models(self, model_query: str) -> Iterable[ObaicModel]: pass
 
     @abstractmethod
-    async def list_models_async(self, model_request: ModelRequest) -> Iterable[ObaicModel]: pass
+    async def list_models_async(self, model_query: str) -> Iterable[ObaicModel]: pass
 
     @abstractmethod
-    def predict(self, model: ObaicModel, prediction_request: PredictionRequest) -> Iterable[ObaicOutput]: pass
+    def predict_with_features(self, model: ObaicModel, features: List[ObaicFeature] ) -> Iterable[ObaicOutput]: pass
 
     @abstractmethod
-    async def predict_async(self, model: ObaicModel, prediction_request: PredictionRequest) -> Iterable[ObaicOutput]: pass
+    async def predict_with_data_ref_async(self, model: ObaicModel, 
+                                                data_src_parameters: Dict[str, str],
+                                                data_src_credentials: Dict[str, str], 
+                                                data_query: str) -> Iterable[ObaicOutput]: pass
 
     @abstractmethod
-    async def train(self): pass
+    def train_with_examples(self): pass
 
     @abstractmethod
-    async def train_async(self): pass
+    async def train_with_data_ref_async(self): pass

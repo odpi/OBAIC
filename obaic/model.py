@@ -1,10 +1,9 @@
+from typing import List, Set
+
 class ObaicModelFormat:
-    """
-    PMML, ONNX, or other formats recognized by OBAIC
-    """
+    # PMML, ONNX, or other formats recognized by OBAIC
     name: str
     version: str
-
 class ObaicModelField:
     # source: http://dmg.org/pmml/v4-4/DataDictionary.html
     # name of the field
@@ -24,10 +23,6 @@ class ObaicModelField:
     allow_missing: bool
     # extra information like shape of data, distribution, min/max, etc.
     description: str
-
-class ObaicModelFeature(ObaicModelField): pass
-
-class ObaicModelOutput(ObaicModelField): pass
 
 class ObaicModelMetric:
     # based on model used, metric can be 
@@ -59,13 +54,13 @@ class ObaicModel:
     # Natural language processing | Online advertising |
     # Recommender systems | Sentiment analysis |
     # Telecommunication | Time-series forecasting | etc.
-    tags: set[str]
+    tags: Set[str]
     dependency: str
     creator: str
     description: str
-    example: list[ObaicModelFeature]
-    prediction: list[ObaicModelOutput]
-    performance: list[ObaicModelMetric]
+    features: List[ObaicModelField]
+    predictions: List[ObaicModelField]
+    performance: List[ObaicModelMetric]
     rating: int
     # link to the real model for download
     url: str
